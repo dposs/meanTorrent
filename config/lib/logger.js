@@ -16,7 +16,13 @@ var validFormats = ['combined', 'common', 'dev', 'short', 'tiny'];
 
 // Instantiating the default winston application logger with the Console
 // transport
-var logger = new winston.Logger({
+var logger = new winston.createLogger({
+  format: winston.format.combine(
+    winston.format.colorize(),
+    winston.format.printf(({level, message}) => {
+      return `[${level}] ${message}`;
+    })
+  ),
   transports: [
     new winston.transports.Console({
       level: 'info',
@@ -27,6 +33,10 @@ var logger = new winston.Logger({
     })
   ],
   exitOnError: false
+});
+
+winston.addColors({
+  info: 'bold green'
 });
 
 // A stream object with a write function that will call the built-in winston
@@ -58,7 +68,7 @@ logger.setupFileLogger = function setupFileLogger() {
     // Check first if the configured path is writable and only then
     // instantiate the file logging transport
     if (fs.openSync(fileLoggerTransport.filename, 'a+')) {
-      logger.add(winston.transports.File, fileLoggerTransport);
+      logger.add(new winston.transports.File(fileLoggerTransport));
     }
 
     return true;

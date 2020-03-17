@@ -8,8 +8,14 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "/home/daniel/Workspace/meanTorrent/node_modules/.bin/gulp",
-            "console": "integratedTerminal"
+            //"program": "${workspaceFolder}/node_modules/.bin/gulp",
+            "console": "integratedTerminal",
+            "program": "${workspaceFolder}/server.js",
+            "env": {
+                "NODE_ENV": "development"
+            }
+            //"port": 9229,
+            //"timeout": 30000
         }
     ]
 }

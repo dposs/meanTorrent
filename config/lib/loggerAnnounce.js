@@ -11,7 +11,7 @@ var validFormats = ['combined', 'common', 'dev', 'short', 'tiny'];
 
 // Instantiating the default winston application logger with the Console
 // transport
-var loggerAnnounce = new winston.Logger({
+var loggerAnnounce = winston.createLogger({
   transports: [
     new winston.transports.Console({
       level: 'info',
@@ -49,7 +49,7 @@ loggerAnnounce.setupFileLogger = function setupFileLogger() {
     // Check first if the configured path is writable and only then
     // instantiate the file logging transport
     if (fs.openSync(fileLoggerTransport.filename, 'a+')) {
-      loggerAnnounce.add(winston.transports.File, fileLoggerTransport);
+      loggerAnnounce.add(new winston.transports.File(fileLoggerTransport));
     }
 
     return true;

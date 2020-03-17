@@ -67,7 +67,7 @@ gulp.task("nodemon-nodebug", function () {
 });
 
 // Watch Files For Changes
-gulp.task("watch", function () {
+gulp.task("watch", function (done) {
   // Start livereload
   plugins.refresh.listen();
 
@@ -86,6 +86,8 @@ gulp.task("watch", function () {
     gulp.watch(defaultAssets.server.gulpConfig, gulp.series("eslint"));
     gulp.watch(defaultAssets.client.views).on("change", plugins.refresh.changed);
   }
+
+  done();
 });
 
 // Watch server test files
